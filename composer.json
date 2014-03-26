@@ -1,0 +1,31 @@
+{
+    "name": "sonata-project/elastica-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony SonataElasticaBundle",
+    "keywords": ["elastica", "elasticsearch", "sonata"],
+    "homepage": "http://sonata-project.org/bundles/elastica",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Rabaix",
+            "email": "thomas.rabaix@sonata-project.org",
+            "homepage": "http://sonata-project.org"
+        },
+        {
+            "name": "Sonata Community",
+            "homepage": "https://github.com/sonata-project/SonataElasticaBundle/contributors"
+        }
+    ],
+    "require": {
+        "sonata-project/datagrid-bundle": "~2.3",
+        "friendsofsymfony/elastica-bundle": "3.0.*@dev"
+    },
+    "autoload": {
+        "psr-4": { "Sonata\\ElasticaBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2.x-dev"
+        }
+    }
+}
