@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle\Datagrid\Filter;
+namespace Sonata\ElasticaBundle\Datagrid\Filter;
 
-use Application\Sonata\DatagridBundle\Filter\BaseFilter;
-use Application\Sonata\DatagridBundle\ProxyQuery\ProxyQueryInterface;
+use Sonata\DatagridBundle\Filter\BaseFilter;
+use Sonata\DatagridBundle\ProxyQuery\ProxyQueryInterface;
 
 class RangeFilter extends BaseFilter
 {
@@ -29,10 +29,11 @@ class RangeFilter extends BaseFilter
      */
     public function filter(ProxyQueryInterface $queryBuilder, $alias, $field, $data)
     {
-        $query = $queryBuilder->getQueryBuilder()->getQuery();
-
-        $query->setFilter(new \Elastica\Filter\Range($this->getFieldName(),
-            array($this->getOperator() => $this->getValue())
+        $queryBuilder->getQuery()->setFilter(new \Elastica\Filter\Range($this->getFieldName(),
+            array(
+                'gt' => $this->getOption('min'),
+                'lt' => $this->getOption('max')
+            )
         ));
     }
 
@@ -43,7 +44,8 @@ class RangeFilter extends BaseFilter
     {
         return array(
             'field_name' => null,
-            'operator'   => null,
+            'min'        => null,
+            'max'        => null,
         );
     }
 
@@ -57,35 +59,5 @@ class RangeFilter extends BaseFilter
             'field_options' => $this->getFieldOptions(),
             'label'         => $this->getLabel()
         ));
-    }
-
-    /**
-     * Returns operator to use
-     *
-     * @return null|string
-     */
-    protected function getOperator()
-    {
-        $operator = $this->getOption('operator');
-
-        switch ($operator) {
-            case '<':
-                return 'lt';
-                break;
-
-            case '>':
-                return 'gt';
-                break;
-
-            case '<=':
-                return 'lte';
-                break;
-
-            case '>=':
-                return 'gte';
-                break;
-        }
-
-        return $operator;
     }
 }

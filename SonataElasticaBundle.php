@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle;
+namespace Sonata\ElasticaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

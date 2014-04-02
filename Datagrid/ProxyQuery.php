@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle\Datagrid;
+namespace Sonata\ElasticaBundle\Datagrid;
 
-use Application\Sonata\DatagridBundle\ProxyQuery\BaseProxyQuery;
-use Application\Sonata\DatagridBundle\ProxyQuery\ProxyQueryInterface;
+use Sonata\DatagridBundle\ProxyQuery\BaseProxyQuery;
+use Sonata\DatagridBundle\ProxyQuery\ProxyQueryInterface;
 
 use Elastica\Search;
 
@@ -37,11 +37,11 @@ class ProxyQuery extends BaseProxyQuery implements ProxyQueryInterface
         }
 
         // Limit & offset
-        $this->results = $this->queryBuilder->getRepository()->find($query, null, array(
+        $this->results = $this->queryBuilder->getRepository()->createPaginatorAdapter($query, array(
             Search::OPTION_SIZE => $this->getMaxResults(),
             Search::OPTION_FROM => $this->getFirstResult()
         ));
 
-        return $this->results;
+        return $this->results->getResults($this->getFirstResult(), $this->getMaxResults())->toArray();
     }
 }

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle\Datagrid;
+namespace Sonata\ElasticaBundle\Datagrid;
 
-use Application\Sonata\DatagridBundle\Pager\BasePager;
+use Sonata\DatagridBundle\Pager\BasePager;
 
 /**
  * Elastica pager class
@@ -28,7 +28,7 @@ class Pager extends BasePager
         $countQuery = clone $this->getQuery();
         $countQuery->execute();
 
-        return count($countQuery->getResults());
+        return $countQuery->getResults()->getTotalHits();
     }
 
     /**
@@ -53,6 +53,8 @@ class Pager extends BasePager
     public function init()
     {
         $this->resetIterator();
+
+        $this->getQuery()->setMaxResults($this->getMaxPerPage());
 
         $this->setNbResults($this->computeNbResult());
 

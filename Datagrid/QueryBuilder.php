@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle\Datagrid;
+namespace Sonata\ElasticaBundle\Datagrid;
 
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use FOS\ElasticaBundle\Repository;

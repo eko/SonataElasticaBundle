@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\Sonata\ElasticaBundle\Tests\Datagrid;
+namespace Sonata\ElasticaBundle\Tests\Datagrid;
 
-use Application\Sonata\ElasticaBundle\Datagrid\ProxyQuery;
+use Sonata\ElasticaBundle\Datagrid\ProxyQuery;
 
 /**
  * Class ProxyQueryTest
@@ -25,17 +25,27 @@ class ProxyQueryTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         // Given
+        $results = $this->getMockBuilder('FOS\ElasticaBundle\Paginator\TransformedPartialResults')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $results->expects($this->any())->method('toArray')->will($this->returnValue(array(1, 2)));
+
+        $transformedPager = $this->getMockBuilder('FOS\ElasticaBundle\Paginator\TransformedPaginatorAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $transformedPager->expects($this->any())->method('getResults')->will($this->returnValue($results));
+
         $repository = $this->getMockBuilder('FOS\ElasticaBundle\Repository')
             ->disableOriginalConstructor()
             ->getMock();
-        $repository->expects($this->once())->method('find')->will($this->returnValue(array(1, 2)));
+        $repository->expects($this->once())->method('createPaginatorAdapter')->will($this->returnValue($transformedPager));
 
-        $elasticaQuery = $this->getMockBuilder('Application\Sonata\ElasticaBundle\Datagrid\QueryBuilder')
+        $elasticaQuery = $this->getMockBuilder('Sonata\ElasticaBundle\Datagrid\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
         $elasticaQuery->expects($this->once())->method('getRepository')->will($this->returnValue($repository));
 
-        $pager = $this->getMock('Application\Sonata\DatagridBundle\Pager\PagerInterface');
+        $pager = $this->getMock('Sonata\DatagridBundle\Pager\PagerInterface');
 
         // When
         $proxyQuery = new ProxyQuery($elasticaQuery, $pager);
