@@ -29,10 +29,14 @@ class RangeFilter extends BaseFilter
      */
     public function filter(ProxyQueryInterface $queryBuilder, $alias, $field, $data)
     {
+        if (!$this->getOption('min') && !$this->getOption('max')) {
+            return;
+        }
+
         $queryBuilder->getQuery()->setFilter(new \Elastica\Filter\Range($this->getFieldName(),
             array(
-                'gt' => $this->getOption('min'),
-                'lt' => $this->getOption('max')
+                'gte' => $this->getOption('min'),
+                'lte' => $this->getOption('max')
             )
         ));
     }

@@ -75,26 +75,10 @@ class QueryBuilder
     }
 
     /**
-     * Sets query criteria
-     *
-     * @param array $criteria
+     * @param \Elastica\Query $query
      */
-    public function setCriteria(array $criteria)
+    public function setQuery(\Elastica\Query $query)
     {
-        if (empty($criteria)) {
-            return;
-        }
-
-        $boolQuery = new \Elastica\Query\Bool();
-
-        foreach ($criteria as $key => $value) {
-            $queryString = new \Elastica\Query\QueryString();
-            $queryString->setFields(array($key));
-            $queryString->setQuery($value);
-
-            $boolQuery->addShould($queryString);
-        }
-
-        $this->query->setQuery($boolQuery);
+        $this->query = $query;
     }
 }

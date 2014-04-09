@@ -39,7 +39,7 @@ class ProxyQuery extends BaseProxyQuery implements ProxyQueryInterface
         // Limit & offset
         $this->results = $this->queryBuilder->getRepository()->createPaginatorAdapter($query, array(
             Search::OPTION_SIZE => $this->getMaxResults(),
-            Search::OPTION_FROM => $this->getFirstResult()
+            Search::OPTION_FROM => $this->getFirstResult(),
         ));
 
         return $this->results->getResults($this->getFirstResult(), $this->getMaxResults())->toArray();
